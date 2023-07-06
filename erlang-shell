@@ -1,0 +1,7 @@
+# Trace all calls to Module
+
+Tracer = self().
+Match = [{'_', [], [{return_trace}]}].
+Module = ?
+erlang:trace_pattern({Module, '_', '_'}, Match, [local]).
+erlang:trace(all, true, [call, timestamp, {tracer, Tracer}]).
