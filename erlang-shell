@@ -2,6 +2,7 @@
 
 Tracer = self().
 Match = [{'_', [], [{return_trace}]}].
-Module = ?
-erlang:trace_pattern({Module, '_', '_'}, Match, [local]).
+Module = '_'
+Function '_'
+erlang:trace_pattern({Module, Function, '_'}, Match, [local]).
 erlang:trace(all, true, [call, timestamp, {tracer, Tracer}]).
