@@ -19,3 +19,27 @@
 "Web / App"  -> "Web / App": Include IBAN in response
 
 @enduml
+
+@startuml
+"Web / App" -> "Recipient API Gateway": Get form
+"Recipient API Gateway" -> "Kivra Core": Get form
+"Kivra Core" -> "Forms": Get form
+"Kivra Core" <- "Forms": Form 
+"Recipient API Gateway" <- "Kivra Core": Form 
+"Web / App" <- "Recipient API Gateway": Form 
+
+
+"Web / App" -> "Web / App": Identify questions of type verified_account
+"Web / App" -> "Cashier": Get Tink URL (POST cashier:v1/user/:ukey/accountcheck)
+"Cashier" -> "Tink": Get Tink URL 
+
+"Cashier" <- "Tink": Tink URL
+"Web / App" <- "Cashier": Tink URL 
+
+
+"Web / App" -> "Tink": Use Tink URL for integration
+"Web / App" <- "Tink": Users accounts overview
+
+"Web / App" -> "Cashier": Get IBAN for choosen account (GET cashier:v1/user/:ukey/accountcheck/:report_id)
+"Web / App"  -> "Web / App": Include IBAN in response
+@enduml
