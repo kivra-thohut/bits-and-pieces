@@ -1,0 +1,21 @@
+@startuml
+
+"Web / App" -> "Recipient API Gateway": Get form
+"Recipient API Gateway" -> "Kivra Core": Get form
+"Kivra Core" -> "Forms": Get form
+"Forms" -> "Cashier": Get Tink URL (POST cashier:v1/user/:ukey/accountcheck)
+"Cashier" -> "Tink": Get Tink URL 
+
+"Cashier" <- "Tink": Tink URL
+"Forms" <- "Cashier": Tink URL 
+"Kivra Core" <- "Forms": Form with Tink URL
+"Recipient API Gateway" <- "Kivra Core": Form with Tink URL
+"Web / App" <- "Recipient API Gateway": Form with Tink URL
+
+"Web / App" -> "Tink": Use Tink URL for integration
+"Web / App" <- "Tink": Users accounts overview
+
+"Web / App" -> "Cashier": Get IBAN (GET cashier:v1/user/:ukey/accountcheck/:report_id)
+"Web / App"  -> "Web / App": Include IBAN in response
+
+@enduml
