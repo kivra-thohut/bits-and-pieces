@@ -1,0 +1,10 @@
+@startuml
+"Web / App" -> "Recipient API Gateway": Get form
+"Recipient API Gateway" -> "Kivra Core": Get form
+"Kivra Core" -> "Forms": Get form
+"Forms" -> "Cashier": Get Tink URL
+
+"Kivra Core" <- "Forms": Form with Tink URL
+"Recipient API Gateway" <- "Kivra Core": Form with Tink URL
+"Web / App" <- "Recipient API Gateway": Form with Tink URL
+@enduml
