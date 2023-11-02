@@ -7,3 +7,9 @@ index=se_index_contsvc_secmedium sourcetype="contsvc:personas:json" request.path
 
 # mumin 
 index=se_index_contsvc_secmedium source="/var/log/mumin/log.json" 
+
+# mumin - user has been updated in 1 or more fields
+index=se_index_contsvc_secmedium source="/var/log/mumin/log.json" "Repairing User Data"
+
+# mumin - email address repair
+index=se_index_contsvc_secmedium source="/var/log/mumin/log.json" "Repairing User Validated Email"
