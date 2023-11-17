@@ -1,0 +1,2 @@
+shfmt -i 4 -w bin/kivra-agreements 
+shellcheck -o all bin/kivra-agreements
