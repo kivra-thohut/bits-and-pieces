@@ -13,3 +13,6 @@ index=se_index_contsvc_secmedium source="/var/log/mumin/log.json" "Repairing Use
 
 # mumin - email address repair
 index=se_index_contsvc_secmedium source="/var/log/mumin/log.json" "Repairing User Validated Email"
+
+# release checks
+index=se_index_platform_secmedium status >= 500 tenant | stats count by method, endpoint, status
