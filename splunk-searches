@@ -21,3 +21,7 @@ index=se_index_platform_secmedium status >= 500 tenant | stats count by method, 
 index="se_index_contsvc_secmedium" sourcetype="contsvc:mumin" resp_status>=500 
 | rex field=_raw "(?<date>\d{4}-\d{2}-\d{2})T(?<hour>\d{2})"
 | chart count by host, date
+
+index="se_index_contsvc_secmedium" sourcetype="contsvc:mumin" resp_status>=500
+| rex field=_raw "(?<date>\d{4}-\d{2}-\d{2})T(?<hour>\d{2})"
+| stats count by date, host, resp_status
