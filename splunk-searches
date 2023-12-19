@@ -25,3 +25,6 @@ index="se_index_contsvc_secmedium" sourcetype="contsvc:mumin" resp_status>=500
 index="se_index_contsvc_secmedium" sourcetype="contsvc:mumin" resp_status>=500
 | rex field=_raw "(?<date>\d{4}-\d{2}-\d{2})T(?<hour>\d{2})"
 | stats count by date, host, resp_status
+
+index="se_index_contsvc_secmedium" sourcetype="contsvc:mumin" job_* host=minion-04.vbg.prod.kivra.net
+| table time, host, cronjob, message
