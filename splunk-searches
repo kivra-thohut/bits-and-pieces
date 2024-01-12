@@ -1,6 +1,6 @@
 # release checks
 index=se_index_platform_secmedium status >= 500 tenant | stats count by method, endpoint, status
-index=se_index_platform_secmedium endpoint="/v1/user/{ukey}/agreement/{akey}/sign"
+index=se_index_platform_secmedium endpoint="/v1/user/{ukey}/agreement/{akey}/sign" | stats count by status
 
 # api gw
 index=se_index_platform_secmedium owner="Content Services" | stats count by endpoint
