@@ -1,3 +1,7 @@
+# release checks
+index=se_index_platform_secmedium status >= 500 tenant | stats count by method, endpoint, status
+index=se_index_platform_secmedium endpoint="/v1/user/{ukey}/agreement/{akey}/sign"
+
 # api gw
 index=se_index_platform_secmedium owner="Content Services" | stats count by endpoint
 
@@ -7,24 +11,16 @@ index=se_index_contsvc_secmedium sourcetype="contsvc:personas:json" request.path
 
 # mumin 
 index=se_index_contsvc_secmedium source="/var/log/mumin/log.json" 
-
 # mumin - user has been updated in 1 or more fields
 index=se_index_contsvc_secmedium source="/var/log/mumin/log.json" "Repairing User Data"
-
 # mumin - email address repair
 index=se_index_contsvc_secmedium source="/var/log/mumin/log.json" "Repairing User Validated Email"
-
-# release checks
-index=se_index_platform_secmedium status >= 500 tenant | stats count by method, endpoint, status
-
 # mumin
 index="se_index_contsvc_secmedium" sourcetype="contsvc:mumin" resp_status>=500 
 | rex field=_raw "(?<date>\d{4}-\d{2}-\d{2})T(?<hour>\d{2})"
 | chart count by host, date
-
 index="se_index_contsvc_secmedium" sourcetype="contsvc:mumin" resp_status>=500
 | rex field=_raw "(?<date>\d{4}-\d{2}-\d{2})T(?<hour>\d{2})"
 | stats count by date, host, resp_status
-
 index="se_index_contsvc_secmedium" sourcetype="contsvc:mumin" job_* host=minion-04.vbg.prod.kivra.net
 | table time, host, cronjob, message
