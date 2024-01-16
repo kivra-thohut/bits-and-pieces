@@ -24,3 +24,6 @@ index="se_index_contsvc_secmedium" sourcetype="contsvc:mumin" resp_status>=500
 | stats count by date, host, resp_status
 index="se_index_contsvc_secmedium" sourcetype="contsvc:mumin" job_* host=minion-04.vbg.prod.kivra.net
 | table time, host, cronjob, message
+
+# kivra mm
+index=se_index_contsvc_sechigh source="/var/log/kivra-mm/kivra-mm.log" | stats count by response_code
