@@ -23,7 +23,17 @@ index="se_index_contsvc_secmedium" sourcetype="contsvc:mumin" resp_status>=500
 | rex field=_raw "(?<date>\d{4}-\d{2}-\d{2})T(?<hour>\d{2})"
 | stats count by date, host, resp_status
 index="se_index_contsvc_secmedium" sourcetype="contsvc:mumin" job_* host=minion-04.vbg.prod.kivra.net
-| table time, host, cronjob, message
 
 # kivra mm
 index=se_index_contsvc_sechigh source="/var/log/kivra-mm/kivra-mm.log" | stats count by response_code
+
+
+
+# Mumin 500s
+index="*"
+[search index="se_index_contsvc_secmedium"
+        resp_status=500
+        | eval corr_id='correlation_id'
+        | table corr_id
+        | return $corr_id
+]
