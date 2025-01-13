@@ -1,0 +1,6 @@
+# personas
+index=se_index_contsvc_secmedium sourcetype="contsvc:personas:json"
+index=se_index_contsvc_secmedium sourcetype="contsvc:personas:json" request.path="/v1/organization/*/members" | stats count by "request.headers.user-agent"
+
+# api gw
+index=se_index_platform_secmedium owner="Content Services" | stats count by endpoint
