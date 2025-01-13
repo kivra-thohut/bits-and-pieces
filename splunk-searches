@@ -27,8 +27,6 @@ index="se_index_contsvc_secmedium" sourcetype="contsvc:mumin" job_* host=minion-
 # kivra mm
 index=se_index_contsvc_sechigh source="/var/log/kivra-mm/kivra-mm.log" | stats count by response_code
 
-
-
 # Mumin 500s
 index="*"
 [search index="se_index_contsvc_secmedium"
@@ -37,3 +35,9 @@ index="*"
         | table corr_id
         | return $corr_id
 ]
+
+# smaug
+index=se_index_platform_secmedium sourcetype="platform:smaug"
+| stats count(eval(like(_raw, "%content_post%"))) as post_count
+       , count(eval(like(_raw, "%content_get%"))) as get_count
+       , count(eval(like(_raw, "%content_delete%"))) as delete_count
