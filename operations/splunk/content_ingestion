@@ -1,5 +1,9 @@
-# api gw
-index=se_index_platform_secmedium owner="Content Services" | stats count by endpoint
+https://grafana.kivra.net/d/edyeanmeu4vswf/api-gw-endpoints?orgId=1&refresh=5s
+https://grafana.kivra.net/d/de34h09r0jf9ca/rest-tenant-content?orgId=1
+https://grafana.kivra.net/d/ee4mc9o2a9gxsb/retained-application?orgId=1
+
+# kivra mm
+index=se_index_contsvc_sechigh source="/var/log/kivra-mm/kivra-mm.log" | stats count by response_code
 
 # smaug
 index=se_index_platform_secmedium sourcetype="platform:smaug"
@@ -7,5 +11,12 @@ index=se_index_platform_secmedium sourcetype="platform:smaug"
        , count(eval(like(_raw, "%content_get%"))) as get_count
        , count(eval(like(_raw, "%content_delete%"))) as delete_count
 
-# kivra mm
-index=se_index_contsvc_sechigh source="/var/log/kivra-mm/kivra-mm.log" | stats count by response_code
+# kivra core
+index=se_index_kivra_core_secmedium kivra_core source="/var/log/kivra_core/log.json" "Could not fetch retained content for user"
+
+# troubleshooting failures to import retained content
+{ok, KeyList} = loco_failqueue:get_all_keys().
+[Obj || Obj <- [loco_failqueue:get(Key) || Key <- KeyList], Obj =/= {error,notfound}].
+
+SSN = loco_user:get_ssn(element(2, loco_user:get(<<"">>))).
+gen_lb:call(smaug, [fetch_content, context:new(), SSN]).
