@@ -1,0 +1,13 @@
+native_python_fmt:
+	autopep8 --global-config .pycodestyle --recursive --in-place -a -a src
+
+native_lint: local_autopep8 local_pylint
+
+native_autopep8:
+	! autopep8 --exclude src/event-schemas --global-config .pycodestyle --recursive --diff -a -a src | grep .
+
+native_pylint:
+	find src -path src/event-schemas -prune -o -name '*.py' -print | xargs pylint
+
+native_mypy:
+	mypy --strict src
