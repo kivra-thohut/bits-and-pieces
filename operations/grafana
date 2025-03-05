@@ -1,1 +1,7 @@
+# Registered Letters - API GW
+{k8s_container_name="sender-api-gateway", k8s_namespace_name="sender-api-gateway-prod"} | json status="body.status" | json group="body.group" | group = `Registered Letters Proxy`
+{k8s_container_name="recipient-api-gateway", k8s_namespace_name="recipient-api-gateway-prod"} | json status="body.status" | json group="body.group" | group = `Registered letters`
+{k8s_container_name="admin-api-gateway", k8s_namespace_name="admin-api-gateway-prod"} | json status="body.status" | json group="body.group" | group = `Registered Letters`
 
+# Registered Letter Service
+{k8s_container_name="registered-letters", k8s_namespace_name="registered-letters-prod"} |= `request completed` | json status="body.http_code" 
