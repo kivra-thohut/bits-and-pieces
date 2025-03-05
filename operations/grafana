@@ -5,3 +5,4 @@
 
 # Registered Letter Service
 {k8s_container_name="registered-letters", k8s_namespace_name="registered-letters-prod"} |= `request completed` | json status="body.http_code" 
+{k8s_container_name="registered-letters", k8s_namespace_name="registered-letters-prod"} |= `request completed` | json status="body.http_code" | status != `200` | status != `201` | status != `404` | status != `204`
